@@ -1,4 +1,5 @@
 import pygame
+import math
 
 class Game:
     def __init__(self):
@@ -10,23 +11,26 @@ class Game:
     def run(self):
         run = True
 
-        def check_keys(mx, my, mspeed):
+        def check_keys(mdir, mspeed):
             pk = pygame.key.get_pressed()
             if pk[pygame.K_LEFT]:
-                mx = mx - mspeed
+                mdir = mdir - mspeed
             if pk[pygame.K_RIGHT]:
-                mx = mx + mspeed
-            if pk[pygame.K_UP]:
-                my = my - mspeed
-            if pk[pygame.K_DOWN]:
-                my = my + mspeed
-            return (mx, my)
+                mdir = mdir + mspeed
+            # if pk[pygame.K_UP]:
+            #     my = my - mspeed
+            # if pk[pygame.K_DOWN]:
+            #     my = my + mspeed
+            return mdir
 
-        x = 20
-        y = 40
-        w = 60
-        h = 80
-        speed = 5
+        direction = 0 - math.pi
+        center = (150, 150)
+        radius = 100
+        # x = 20
+        # y = 40
+        # w = 60
+        # h = 80
+        speed = math.pi/60
 
         while run:
             for event in pygame.event.get():
@@ -35,11 +39,15 @@ class Game:
 
             pygame.time.delay(10)
 
-
-            (x, y) = check_keys(x, y, speed)
+            direction = check_keys(direction, speed)
 
             self.win.fill((0,0,0))
-            pygame.draw.rect(self.win, (100, 50, 200), (x, y, w, h))
+            # pygame.draw.rect(self.win, (100, 50, 200), (x, y, w, h))
+            pygame.draw.circle(self.win, (100, 150, 200), center, radius)
+            x_pos = math.cos(direction) * 20 + 150
+            y_pos = math.sin(direction) * 20 + 150
+            end_pos = (x_pos, y_pos)
+            pygame.draw.aaline(self.win, (0, 0, 150), center, end_pos)
 
             pygame.display.flip()
 

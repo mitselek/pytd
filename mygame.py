@@ -6,6 +6,13 @@ class Game:
         self.width = 600
         self.height = 500
         self.win = pygame.display.set_mode((self.width, self.height))
+        self.color = {
+            'white': (255, 255, 255),
+            'blue': (0, 0, 255),
+            'yellow': (255, 255, 0),
+            'red': (255, 0, 0)
+        }
+
         pygame.display.set_caption('sdgf')
 
     def run(self):
@@ -43,11 +50,11 @@ class Game:
 
             self.win.fill((0,0,0))
             # pygame.draw.rect(self.win, (100, 50, 200), (x, y, w, h))
-            pygame.draw.circle(self.win, (100, 150, 200), center, radius)
-            x_pos = math.cos(direction) * 20 + 150
-            y_pos = math.sin(direction) * 20 + 150
+            pygame.draw.circle(self.win, self.color['blue'], center, radius, 10)
+            x_pos = math.cos(direction) * 100 + 150
+            y_pos = math.sin(direction) * 50 + 150
             end_pos = (x_pos, y_pos)
-            pygame.draw.aaline(self.win, (0, 0, 150), center, end_pos)
+            pygame.draw.aaline(self.win, self.color['red'], center, end_pos)
 
             pygame.display.flip()
 
